@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var menu_1 = require("./menu");
+var log_1 = require("./log");
 var Barista = /** @class */ (function () {
     function Barista(coffeeCounter) {
         this.workload = [];
@@ -27,7 +28,7 @@ var Barista = /** @class */ (function () {
             this.workload.push({ name: menuItem.name, currentTime: menuItem.time });
         }
         else {
-            console.log('That item is not on the menu.\n');
+            log_1.logger.info('That item is not on the menu.\n');
         }
     };
     /**
@@ -35,7 +36,7 @@ var Barista = /** @class */ (function () {
      */
     Barista.prototype.showStatusOfDrinks = function () {
         this.workload.forEach(function (item) {
-            console.log(item.name, 'will be completed in', item.currentTime / 1000, 'seconds.\n');
+            log_1.logger.info(item.name, 'will be completed in', item.currentTime / 1000, 'seconds.\n');
         });
     };
     /**
@@ -52,14 +53,14 @@ var Barista = /** @class */ (function () {
             if (currentItem.currentTime === 0) {
                 // this item is done being made
                 this.removeItemFromWorkload();
-                console.log(currentItem.name, 'is done! Adding to coffee counter.\n');
+                log_1.logger.info(currentItem.name, 'is done! Adding to coffee counter.\n');
                 // set it on the coffee counter with a timer of 3 seconds
                 this.coffeeCounter.addDrink({ name: currentItem.name, currentTime: 3000 });
                 return;
             }
         }
         else if (!this.announcementMade) {
-            console.log("No items in the barista's workload queue.\n");
+            log_1.logger.info("No items in the barista's workload queue.\n");
             this.announcementMade = true;
         }
     };

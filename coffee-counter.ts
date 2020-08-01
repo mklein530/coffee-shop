@@ -1,4 +1,5 @@
 import { WorkloadItem } from './workload-item';
+import { logger } from './log';
 
 export class CoffeeCounter {
   private drinks: WorkloadItem[] = [];
@@ -46,12 +47,12 @@ export class CoffeeCounter {
       const removedDrinks = this.pickUpDrinks();
       if (removedDrinks && removedDrinks.length) {
         removedDrinks.forEach((drink) => {
-          console.log(drink, 'has been picked up from the coffee counter.\n');
+          logger.info(drink.name, 'has been picked up from the coffee counter.\n');
         });
         this.announcementMade = false;
       } else {
         if (!this.announcementMade) {
-          console.log('All drinks have been picked up.\n');
+          logger.info('All drinks have been picked up.\n');
           // only announce this once
           this.announcementMade = true;
         }

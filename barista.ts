@@ -1,6 +1,7 @@
 import { MENU, MenuItem } from './menu';
 import { CoffeeCounter } from './coffee-counter';
 import { WorkloadItem } from './workload-item';
+import { logger } from './log';
 
 export class Barista {
   workload: WorkloadItem[] = [];
@@ -33,7 +34,7 @@ export class Barista {
     if (menuItem) {
       this.workload.push({ name: menuItem.name as MenuItem, currentTime: menuItem.time });
     } else {
-      console.log('That item is not on the menu.\n');
+      logger.info('That item is not on the menu.\n');
     }
   }
 
@@ -42,7 +43,7 @@ export class Barista {
    */
   private showStatusOfDrinks() {
     this.workload.forEach((item) => {
-      console.log(item.name, 'will be completed in', item.currentTime / 1000, 'seconds.\n');
+      logger.info(item.name, 'will be completed in', item.currentTime / 1000, 'seconds.\n');
     });
   }
 
@@ -60,13 +61,13 @@ export class Barista {
       if (currentItem.currentTime === 0) {
         // this item is done being made
         this.removeItemFromWorkload();
-        console.log(currentItem.name, 'is done! Adding to coffee counter.\n');
+        logger.info(currentItem.name, 'is done! Adding to coffee counter.\n');
         // set it on the coffee counter with a timer of 3 seconds
         this.coffeeCounter.addDrink({ name: currentItem.name, currentTime: 3000 });
         return;
       }
     } else if (!this.announcementMade) {
-      console.log("No items in the barista's workload queue.\n");
+      logger.info("No items in the barista's workload queue.\n");
       this.announcementMade = true;
     }
   }

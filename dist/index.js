@@ -44,19 +44,15 @@ var fs_1 = __importDefault(require("fs"));
 var coffee_counter_1 = require("./coffee-counter");
 var barista_1 = require("./barista");
 var menu_1 = require("./menu");
-var util_1 = __importDefault(require("util"));
+var log_1 = require("./log");
 var log_file = fs_1.default.createWriteStream(__dirname + '/debug.log', { flags: 'w' });
 var log_stdout = process.stdout;
-console.log = function (log) {
-    log_file.write(util_1.default.format(log) + '\n');
-    log_stdout.write(util_1.default.format(log) + '\n');
-};
 (function () { return __awaiter(_this, void 0, void 0, function () {
     function prompt() {
         return new Promise(function (resolve, reject) {
             commandLine.question('What drink would you like? (Enter None to exit)\n', function (answer) {
                 if (answer === 'None' || answer === 'none') {
-                    console.log('Exiting coffee shop');
+                    log_1.logger.info('Exiting coffee shop');
                     resolve();
                     process.exit(0);
                 }
@@ -64,7 +60,7 @@ console.log = function (log) {
                     barista.addWorkloadItem(answer);
                 }
                 else {
-                    console.log(answer, "is not on the menu. Please choose something else or type 'none' to exit.\n");
+                    log_1.logger.info(answer, "is not on the menu. Please choose something else or type 'none' to exit.\n");
                 }
                 resolve();
             });

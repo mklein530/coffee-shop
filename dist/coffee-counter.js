@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var log_1 = require("./log");
 var CoffeeCounter = /** @class */ (function () {
     function CoffeeCounter() {
         this.drinks = [];
@@ -42,13 +43,13 @@ var CoffeeCounter = /** @class */ (function () {
             var removedDrinks = _this.pickUpDrinks();
             if (removedDrinks && removedDrinks.length) {
                 removedDrinks.forEach(function (drink) {
-                    console.log(drink, 'has been picked up from the coffee counter.\n');
+                    log_1.logger.info(drink.name, 'has been picked up from the coffee counter.\n');
                 });
                 _this.announcementMade = false;
             }
             else {
                 if (!_this.announcementMade) {
-                    console.log('All drinks have been picked up.\n');
+                    log_1.logger.info('All drinks have been picked up.\n');
                     // only announce this once
                     _this.announcementMade = true;
                 }
